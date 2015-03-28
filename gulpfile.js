@@ -1,10 +1,13 @@
-var gulp    = require('gulp'),
-    webpack = require('gulp-webpack'),
-    connect = require('gulp-connect');
+var gulp        = require('gulp'),
+    gulpWebpack = require('gulp-webpack'),
+    connect     = require('gulp-connect'),
+    webpack     = require('webpack'),
+    path        = require('path');
 
 var config = {
     'src': {
-        'js'  : 'src/js/app.jsx',
+        'app' : './src/js/app.react.js',
+        'js'  : ['src/**/*.js'],
         'html': ['src/**/*.html']
     },
     'build': {
@@ -21,14 +24,22 @@ gulp.task('html', function() {
 
 gulp.task('js', function() {
     return gulp.src(config.src.js)
-        .pipe(webpack({ // TODO: Move into webpack.config.js
+        .pipe(gulpWebpack({ // TODO: Move into webpack.config.js
+            entry: config.src.app,
+            plugins: [
+                new webpack.optimize.OccurenceOrderPlugin(),
+                // TODO: Enable in debug only
+                //new webpack.optimize.DedupePlugin(),
+                //new webpack.optimize.UglifyJsPlugin(),
+                //new webpack.optimize.AggressiveMergingPlugin()
+            ],
             output: {
                 filename: 'bundle.js'
             },
             module: {
                 loaders: [{
-                    test: /\.jsx$/, // A regexp to test the require path
-                    loader: 'jsx' // The module to load. "jsx" is short for "jsx-loader"
+                    test: /\.react\.js$/,
+                    loader: 'jsx'
                 }]
             }
         }))
