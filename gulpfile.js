@@ -19,7 +19,7 @@ gulp.task('html', function() {
         .pipe(gulp.dest(config.build.dir));
 });
 
-gulp.task('build', function() {
+gulp.task('js', function() {
     return gulp.src(config.src.js)
         .pipe(webpack({ // TODO: Move into webpack.config.js
             output: {
@@ -44,10 +44,11 @@ gulp.task('serve', function(next) {
     return next;
 });
 
-/*
-gulp.task('name', [], function() {
-
+gulp.task("watch", function () {
+    gulp.watch(config.src.html, ["html"]);
+    gulp.watch(config.src.js, ["js"]);
 });
-*/
 
-gulp.task('default', ['html', 'build', 'serve']);
+gulp.task("build", ["html", "js"]);
+
+gulp.task('default', ['build', 'watch', 'serve']);
