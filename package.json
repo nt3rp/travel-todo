@@ -24,7 +24,12 @@
     "webpack": "^1.7.3"
   },
   "dependencies": {
+    "browser-request": "^0.3.3",
+    "events": "^1.0.2",
     "flux": "^2.0.1",
-    "react": "^0.13.1"
+    "object-assign": "^2.0.0",
+    "react": "^0.13.1",
+    "react-router": "^0.13.2",
+    "request": "^2.54.0"
   }
 }
