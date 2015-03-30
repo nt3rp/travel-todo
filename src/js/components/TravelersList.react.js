@@ -1,9 +1,12 @@
 var React              = require('react'),
     TravelersStore     = require('../stores/TravelerStore'),
     TravelersConstants = require('../constants/TravelerConstants'),
+    AuthHelpers        = require('../utils/AuthenticationHelpers'),
     Traveler           = require('./Traveler.react.js');
 
 var TravelersList = React.createClass({
+    mixins: [AuthHelpers.requiresAuthentication],
+
     getInitialState: function() {
         return {
             travelers: TravelersStore.getTravelers()
