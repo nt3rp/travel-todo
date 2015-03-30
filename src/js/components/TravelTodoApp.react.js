@@ -1,15 +1,17 @@
 var React = require('react'),
-    Router = require('react-router');
+    Router = require('react-router'),
+    Header = require('./Header.react'),
+    Footer = require('./Footer.react');
 
 var TravelTodoApp = React.createClass({
     render: function() {
         return (
-            <section id="container">
-                <section id='header'>Header</section>
-                <section id='content'>
+            <section id='container'>
+                <Header />
+                <section id='content' className='container-fluid'>
                     <Router.RouteHandler />
                 </section>
-                <section id='footer'>Footer</section>
+                <Footer />
             </section>
         )
     }

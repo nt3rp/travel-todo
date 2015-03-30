@@ -6,6 +6,9 @@ var React         = require('react'),
     Login         = require('./components/Login.react'),
     Travelers     = require('./components/TravelersList.react.js');
 
+require('bootstrap');
+require('../css/style.css');
+
 var routes = (
     <Route name='home' path='/' handler={TravelTodoApp}>
         <DefaultRoute name='login' handler={Login} />
