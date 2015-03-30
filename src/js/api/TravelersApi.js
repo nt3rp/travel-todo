@@ -6,13 +6,6 @@ var Request           = require('browser-request'),
 var Path    = '/travelers',
     Timeout = 5000;     // 5 seconds
 
-var onSuccess = function(travelers) {
-    AppDispatcher.handleViewAction({
-        actionType: TravelerConstants.TRAVELERS_FETCH,
-        travelers: travelers
-    });
-};
-
 var onError = function() {
 
 };
@@ -37,19 +30,23 @@ var TravelersApi = {
                 onError();
             } else if (httpResponse.status == 200) {
                 payload = JSON.parse(httpResponse.response);
-                onSuccess(payload);
+                AppDispatcher.handleViewAction({
+                    actionType: TravelerConstants.TRAVELERS_FETCH,
+                    travelers: payload
+                });
             }
         });
     },
-    updateTraveler: function(traveler) {
+
+    updateTraveler: function(token, traveler) {
         var options = {
             url:     ApiConstants.url + Path + '/' + traveler.id,
-            method:  'POST',
+            method:  'PATCH',
             json:    true,
             timeout: Timeout,
             body:    JSON.stringify({'destinations': traveler.destinations}),
             headers: {
-                'Authorization': 'Token token=' + traveler.token
+                'Authorization': 'Token token=' + token
             }
         };
 
@@ -62,7 +59,10 @@ var TravelersApi = {
                 onError();
             } else if (httpResponse.status == 200) {
                 payload = JSON.parse(httpResponse.response);
-                onSuccess(payload);
+                AppDispatcher.handleViewAction({
+                    actionType: TravelerConstants.TRAVELERS_UPDATE,
+                    travelers: [payload]
+                });
             }
         });
     }

@@ -1,8 +1,5 @@
 # TODO
-## Build Process
-
-- Compile other assets
-- Dev server
+- In progress states (as server can be unreliable)
 
 ## Application Development
 

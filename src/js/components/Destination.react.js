@@ -3,20 +3,22 @@ var React              = require('react'),
 
 var Destination = React.createClass({
     render: function() {
-        var name    = this.props.data.name,
-            visited = this.props.data.visited;
+        var destination = this.props.destination;
 
         return (
             <li className='list-group-item borderless'>
-                <input type='checkbox' checked={visited} onChange={this._onChange}/>
-                {name}
+                <input
+                    type='checkbox'
+                    checked={destination.visited}
+                    onChange={this._onChange}
+                />
+                {destination.name}
             </li>
         )
     },
 
-    _onChange: function(event) {
-        // TODO: Get parent components id from props / state?
-        DestinationActions.changeVisitState(event.target.value);
+    _onChange: function() {
+        DestinationActions.toggleVisited(this.props.traveler, this.props.destination);
     }
 });
 

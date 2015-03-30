@@ -3,23 +3,22 @@ var React       = require('react'),
 
 var Traveler = React.createClass({
     render: function() {
-        var data = this.props.data,
-            name = data.name,
+        var traveler = this.props.traveler,
             destinations = [],
             destination, i;
 
-        for (i = 0; i < data.destinations.length; i++) {
-            destination = data.destinations[i];
+        for (i = 0; i < traveler.destinations.length; i++) {
+            destination = traveler.destinations[i];
 
             // TODO: Destination is a part of traveler... changing it should change the traveler
-            destinations.push(<Destination key={destination.name} data={destination}/>);
+            destinations.push(<Destination key={destination.name} traveler={traveler} destination={destination}/>);
         }
 
         return (
             <div className='panel panel-default'>
                 <div className='panel-heading'>
                     <h4 className='panel-title uppercase'>
-                        {name}
+                        {traveler.name}
                     </h4>
                 </div>
                 <div class="panel-collapse collapse in">
