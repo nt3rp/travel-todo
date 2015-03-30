@@ -28,7 +28,7 @@ var TravelersList = React.createClass({
 
         for (i=0; i < this.state.travelers.length; i++) {
             traveler = this.state.travelers[i];
-            travelers.push(<Traveler key={traveler.id} data={traveler}/>);
+            travelers.push(<Traveler key={traveler.id} traveler={traveler}/>);
         }
 
         return (

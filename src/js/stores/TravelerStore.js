@@ -1,7 +1,8 @@
 var assign            = require('object-assign'),
     EventEmitter      = require('events').EventEmitter,
     Dispatcher        = require('../dispatcher/AppDispatcher.js'),
-    TravelerConstants = require('../constants/TravelerConstants');
+    TravelerConstants = require('../constants/TravelerConstants'),
+    _                 = require('lodash');
 
 /*
  Seems like there are going to be some weird dependencies between TravellerStore and Destinations...
@@ -19,7 +20,7 @@ var assign            = require('object-assign'),
  - ... Oh, maybe we don't need a destination store. Maybe we just need destination actions.
  */
 
-var travelers = [];
+var travelers = {};
 
 // TODO: How to do away with the boilerplate here?
 var TravelerStore = assign({}, EventEmitter.prototype, {
@@ -39,11 +40,19 @@ var TravelerStore = assign({}, EventEmitter.prototype, {
     dispatchToken: Dispatcher.register(function(payload) {
         var action = payload.action;
 
-        console.log(action);
-
         switch (action.actionType) {
             case TravelerConstants.TRAVELERS_FETCH:
-                travelers = action.travelers;
+                travelers = _.reduce(action.travelers, function(obj, val) {
+                    obj[val.id] = val;
+                    return obj;
+                }, {});
+                TravelerStore.emitChange(TravelerConstants.TRAVELERS_CHANGE);
+                break;
+            case TravelerConstants.TRAVELERS_UPDATE:
+                var updatedTraveler  = action.travelers[0],
+                    existingTraveler = travelers[updatedTraveler.id];
+
+                travelers[updatedTraveler.id] = _.merge(existingTraveler, updatedTraveler);
                 TravelerStore.emitChange(TravelerConstants.TRAVELERS_CHANGE);
                 break;
         }
@@ -52,7 +61,11 @@ var TravelerStore = assign({}, EventEmitter.prototype, {
     }),
 
     getTravelers: function() {
-        return travelers;
+        return _.values(travelers);
+    },
+
+    getTraveler: function(id) {
+        return travelers[id];
     }
 });
 
