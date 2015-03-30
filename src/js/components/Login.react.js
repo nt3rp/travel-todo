@@ -60,7 +60,7 @@ var Login = React.createClass({
             // TODO: Should find a way to wait for us to get travellers before transitioning...
             // Also, why does the login view control what happens next. That seems weird.
             TravelerActions.getTravelers(user.token);
-            this.context.router.transitionTo('travellers');
+            this.context.router.transitionTo('travelers');
         }
     }
 

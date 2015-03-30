@@ -12,7 +12,7 @@ require('../css/style.css');
 var routes = (
     <Route name='home' path='/' handler={TravelTodoApp}>
         <DefaultRoute name='login' handler={Login} />
-        <Route name='travellers' handler={Travelers} />
+        <Route name='travelers' handler={Travelers} />
     </Route>
 );
 
