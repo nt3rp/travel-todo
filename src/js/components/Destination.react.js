@@ -7,7 +7,10 @@ var Destination = React.createClass({
             visited = this.props.data.visited;
 
         return (
-            <li><input type='checkbox' checked={visited} onChange={this._onChange}/>{name}</li>
+            <li className='list-group-item borderless'>
+                <input type='checkbox' checked={visited} onChange={this._onChange}/>
+                {name}
+            </li>
         )
     },
 

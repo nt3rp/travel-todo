@@ -16,12 +16,20 @@ var Traveler = React.createClass({
         }
 
         return (
-            <li>
-                {name}
-                <ul>
-                    {destinations}
-                </ul>
-            </li>
+            <div className='panel panel-default'>
+                <div className='panel-heading'>
+                    <h4 className='panel-title uppercase'>
+                        {name}
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul className='list-group marginless'>
+                            {destinations}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         )
     }
 });

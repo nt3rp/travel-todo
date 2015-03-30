@@ -29,7 +29,9 @@ var TravelersList = React.createClass({
         }
 
         return (
-            <ul>{travelers}</ul>
+            <div className='panel-group'>
+                {travelers}
+            </div>
         )
     },
 
