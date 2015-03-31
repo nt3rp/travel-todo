@@ -1,7 +1,7 @@
 var EventEmitter  = require('events').EventEmitter,
     assign        = require('object-assign'),
-    AppDispatcher = require('../dispatcher/AppDispatcher.js'),
-    AuthConstants = require('../constants/AuthenticationConstants.js');
+    AppDispatcher = require('../dispatcher/AppDispatcher'),
+    AuthConstants = require('../constants/AuthenticationConstants');
 
 var user = null;
 
