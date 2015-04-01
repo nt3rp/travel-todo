@@ -12,8 +12,8 @@ var AuthenticationHelpers = {
         }
     },
 
-    hasAccess: function(user, traveler) {
-        user = user || {};
+    canModifyTraveler: function(traveler, user) {
+        user = user || AuthStore.getUser() || {};
         traveler = traveler || {};
 
         return (user.id === traveler.id)

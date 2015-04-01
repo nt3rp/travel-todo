@@ -1,25 +1,49 @@
 var React              = require('react'),
-    DestinationActions = require('../actions/DestinationActions');
+    DestinationActions = require('../actions/DestinationActions'),
+    AuthHelpers = require('../utils/AuthenticationHelpers'),
+    classNames  = require('classnames');
 
 var Destination = React.createClass({
     render: function() {
-        var destination = this.props.destination;
+        var destination = this.props.destination,
+            canModifyDestination = AuthHelpers.canModifyTraveler(this.props.traveler),
+            deleteButton, itemClasses, labelClasses, disabled;
 
-        return (
-            <li className='list-group-item borderless'>
-                <label className='checkbox-inline'>
-                    <input
-                        type='checkbox'
-                        checked={destination.visited}
-                        onChange={this.toggleVisited}
-                    />
-                    {destination.name}
-                </label>
+        itemClasses = classNames({
+            'list-group-item': true,
+            'borderless': true,
+            'disabled': !canModifyDestination
+        });
+
+        labelClasses = classNames({
+            'checkbox-inline': true,
+            'disabled': !canModifyDestination
+        });
+
+        if (canModifyDestination) {
+            deleteButton = (
                 <span className='pull-right'>
                     <button className="btn btn-xs btn-warning" onClick={this.destroyDestination}>
                         <span className="glyphicon glyphicon-trash"></span>
                     </button>
                 </span>
+            );
+        } else {
+            disabled = "disabled";
+        }
+
+        return (
+            <li className={itemClasses}>
+                <label className={labelClasses}>
+                    <input
+                        type='checkbox'
+                        checked={destination.visited}
+                        onChange={this.toggleVisited}
+                        disabled={disabled}
+                    />
+                    {destination.name}
+                </label>
+                {deleteButton}
             </li>
         )
     },

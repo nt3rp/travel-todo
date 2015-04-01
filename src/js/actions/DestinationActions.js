@@ -9,7 +9,7 @@ var DestinationActions = {
     destroy         : function(traveler, destination) {
         var user = AuthStore.getUser();
 
-        if(!AuthHelpers.hasAccess(user, traveler)) {
+        if(!AuthHelpers.canModifyTraveler(traveler, user)) {
             return;
         }
 
@@ -22,7 +22,7 @@ var DestinationActions = {
         var user = AuthStore.getUser(),
             index;
 
-        if(!AuthHelpers.hasAccess(user, traveler)) {
+        if(!AuthHelpers.canModifyTraveler(traveler, user)) {
             return;
         }
 
