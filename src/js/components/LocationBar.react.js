@@ -1,10 +1,32 @@
 var React = require('react'),
-    DestinationActions = require('../actions/DestinationActions');
+    DestinationActions = require('../actions/DestinationActions'),
+    TravelersStore     = require('../stores/TravelerStore'),
+    TravelersConstants = require('../constants/TravelerConstants');
 
 var ENTER_KEY_CODE = 13;
 
 var LocationBar = React.createClass({
+    getInitialState: function() {
+        return {
+            inProgress: false
+        }
+    },
+
+    componentDidMount: function() {
+        TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
+    },
+
+    componentWillUnmount: function() {
+        TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
+    },
+
     render: function() {
+        var disabled;
+
+        if (this.state.inProgress) {
+            disabled="disabled";
+        }
+
         return (
             <div className='form-inline'>
                 <div className='form-group'>
@@ -18,6 +40,7 @@ var LocationBar = React.createClass({
                         className='form-control'
                         type='text'
                         onKeyDown={this._onKeyDown}
+                        disabled={disabled}
                     />
                 </div>
             </div>
@@ -31,7 +54,16 @@ var LocationBar = React.createClass({
     },
 
     addLocation: function(name) {
+        this.setState({
+            inProgress: true
+        });
         DestinationActions.create(this.props.traveler, name);
+    },
+
+    onTravelerUpdate: function() {
+        this.setState({
+            inProgress: false
+        });
     }
 });
 

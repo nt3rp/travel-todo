@@ -1,9 +1,25 @@
 var React              = require('react'),
     DestinationActions = require('../actions/DestinationActions'),
     AuthHelpers = require('../utils/AuthenticationHelpers'),
+    TravelersStore     = require('../stores/TravelerStore'),
+    TravelersConstants = require('../constants/TravelerConstants'),
     classNames  = require('classnames');
 
 var Destination = React.createClass({
+    getInitialState: function() {
+        return {
+            inProgress: false
+        }
+    },
+
+    componentDidMount: function() {
+        TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
+    },
+
+    componentWillUnmount: function() {
+        TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
+    },
+
     render: function() {
         var destination = this.props.destination,
             canModifyDestination = AuthHelpers.canModifyTraveler(this.props.traveler),
@@ -12,12 +28,12 @@ var Destination = React.createClass({
         itemClasses = classNames({
             'list-group-item': true,
             'borderless': true,
-            'disabled': !canModifyDestination
+            'disabled': !canModifyDestination || this.state.inProgress
         });
 
         labelClasses = classNames({
             'checkbox-inline': true,
-            'disabled': !canModifyDestination
+            'disabled': !canModifyDestination || this.state.inProgress
         });
 
         if (canModifyDestination) {
@@ -49,11 +65,23 @@ var Destination = React.createClass({
     },
 
     toggleVisited: function() {
+        this.setState({
+            inProgress: true
+        });
         DestinationActions.toggleVisited(this.props.traveler, this.props.destination);
     },
 
     destroyDestination: function() {
+        this.setState({
+            inProgress: true
+        });
         DestinationActions.destroy(this.props.traveler, this.props.destination);
+    },
+
+    onTravelerUpdate: function() {
+        this.setState({
+            inProgress: false
+        });
     }
 });
 

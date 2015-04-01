@@ -35,6 +35,10 @@ var AuthenticationStore = assign({}, EventEmitter.prototype, {
                 user = null;
                 AuthenticationStore.emitChange(action.actionType);
                 break;
+            case AuthConstants.AUTHENTICATION_ERROR:
+                user = null;
+                AuthenticationStore.emitChange(action.actionType);
+                break;
         }
 
         return true;

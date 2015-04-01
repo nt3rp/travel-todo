@@ -6,17 +6,6 @@ var Request       = require('browser-request'),
 var Path    = '/auth',
     Timeout = 5000;     // 5 seconds
 
-var onSuccess = function(user) {
-    AppDispatcher.handleViewAction({
-        actionType: AuthConstants.AUTHENTICATION_LOGIN,
-        user: user
-    });
-};
-
-var onError = function() {
-
-};
-
 var AuthenticationApi = {
     login: function(username) {
         var options = {
@@ -30,13 +19,16 @@ var AuthenticationApi = {
         Request(options, function(error, httpResponse, body) {
             var payload;
 
-            if (error) {
-                onError();
-            } else if (httpResponse.status == 401) {
-                onError();
-            } else if (httpResponse.status == 200) {
+            if (httpResponse.status === 200) {
                 payload = JSON.parse(httpResponse.response);
-                onSuccess(payload);
+                AppDispatcher.handleViewAction({
+                    actionType: AuthConstants.AUTHENTICATION_LOGIN,
+                    user: payload
+                });
+            } else {
+                AppDispatcher.handleViewAction({
+                    actionType: AuthConstants.AUTHENTICATION_ERROR
+                });
             }
         });
     }
