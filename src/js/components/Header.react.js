@@ -4,12 +4,13 @@ var React = require('react'),
 
 var Header = React.createClass({
     render: function () {
-        var button;
+        var logout;
 
         if (AuthStore.getUser()) {
-            button = (
+            logout = (
                 <button
-                    className='btn btn-default navbar-btn margin-right-small'
+                    type='button'
+                    className='btn btn-default navbar-btn pull-right margin-right-small'
                     onClick={this.logout}>
                     Logout
                 </button>
@@ -21,9 +22,7 @@ var Header = React.createClass({
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <a className="navbar-brand" href="#">Travel-ToDo</a>
-                    </div>
-                    <div className="navbar-right">
-                        {button}
+                        {logout}
                     </div>
                 </div>
             </nav>
