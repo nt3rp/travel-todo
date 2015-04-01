@@ -5,7 +5,23 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     _             = require('lodash');
 
 var DestinationActions = {
-    create          :  function(traveler, destination) {},
+    create          :  function(traveler, destinationName) {
+        var user = AuthStore.getUser(),
+            existingDestination;
+
+        if(!AuthHelpers.canModifyTraveler(traveler, user)) {
+            return;
+        }
+
+        existingDestination = _.find(traveler.destinations, {'name': destinationName});
+        if (existingDestination) {
+            return;
+        }
+
+        traveler.destinations.push({'name': destinationName, visited: false});
+
+        TravelerApi.updateTraveler(user.token, traveler);
+    },
     destroy         : function(traveler, destination) {
         var user = AuthStore.getUser();
 
@@ -20,16 +36,18 @@ var DestinationActions = {
     toggleVisited: function(traveler, destination) {
         // Cross cutting concern / mixin: current user?
         var user = AuthStore.getUser(),
-            index;
+            existingDestination;
 
         if(!AuthHelpers.canModifyTraveler(traveler, user)) {
             return;
         }
 
-        destination.visited = !destination.visited;
+        existingDestination = _.find(traveler.destinations, {'name': destination.name});
+        if (!existingDestination) {
+            return;
+        }
 
-        index = _.findIndex(traveler.destinations, {'name': destination.name});
-        traveler.destinations[index] = destination;
+        existingDestination.visited = !destination.visited;
 
         TravelerApi.updateTraveler(user.token, traveler);
     }

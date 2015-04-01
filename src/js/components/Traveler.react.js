@@ -1,17 +1,28 @@
 var React       = require('react'),
-    Destination = require('./Destination.react');
+    Destination = require('./Destination.react'),
+    LocationBar = require('./LocationBar.react'),
+    AuthHelpers = require('../utils/AuthenticationHelpers');
 
 var Traveler = React.createClass({
     render: function() {
         var traveler = this.props.traveler,
             destinations = [],
-            destination, i;
+            destination, i,
+            locationBar;
 
         for (i = 0; i < traveler.destinations.length; i++) {
             destination = traveler.destinations[i];
 
             // TODO: Destination is a part of traveler... changing it should change the traveler
             destinations.push(<Destination key={destination.name} traveler={traveler} destination={destination}/>);
+        }
+
+        if (AuthHelpers.canModifyTraveler(traveler)) {
+            locationBar = (
+                <div className="panel-footer">
+                    <LocationBar traveler={traveler}/>
+                </div>
+            );
         }
 
         return (
@@ -28,6 +39,7 @@ var Traveler = React.createClass({
                         </ul>
                     </div>
                 </div>
+                {locationBar}
             </div>
         )
     }
