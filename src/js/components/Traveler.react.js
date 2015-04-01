@@ -32,13 +32,9 @@ var Traveler = React.createClass({
                         {traveler.name}
                     </h4>
                 </div>
-                <div class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <ul className='list-group marginless'>
-                            {destinations}
-                        </ul>
-                    </div>
-                </div>
+                <ul className='list-group marginless'>
+                    {destinations}
+                </ul>
                 {locationBar}
             </div>
         )
