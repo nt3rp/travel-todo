@@ -40,6 +40,9 @@ var TravelerStore = assign({}, EventEmitter.prototype, {
 
                 TravelerStore.emitChange(TravelerConstants.TRAVELERS_CHANGE);
                 break;
+            case TravelerConstants.TRAVELERS_ERROR:
+                TravelerStore.emitChange(TravelerConstants.TRAVELERS_ERROR);
+                break;
         }
 
         return true;

@@ -26,6 +26,11 @@ var TravelersApi = {
                     actionType: TravelerConstants.TRAVELERS_FETCH,
                     travelers: payload
                 });
+            } else {
+                AppDispatcher.handleViewAction({
+                    actionType: TravelerConstants.TRAVELERS_ERROR,
+                    travelers: payload
+                });
             }
         });
     },
@@ -50,6 +55,11 @@ var TravelersApi = {
                 AppDispatcher.handleViewAction({
                     actionType: TravelerConstants.TRAVELERS_UPDATE,
                     travelers: [payload]
+                });
+            } else {
+                AppDispatcher.handleViewAction({
+                    actionType: TravelerConstants.TRAVELERS_ERROR,
+                    travelers: payload
                 });
             }
         });
