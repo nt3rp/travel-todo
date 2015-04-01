@@ -29,11 +29,11 @@ var AuthenticationStore = assign({}, EventEmitter.prototype, {
         switch (action.actionType) {
             case AuthConstants.AUTHENTICATION_LOGIN:
                 user = action.user;
-                AuthenticationStore.emitChange(AuthConstants.AUTHENTICATION_CHANGE);
+                AuthenticationStore.emitChange(action.actionType);
                 break;
             case AuthConstants.AUTHENTICATION_LOGOUT:
                 user = null;
-                AuthenticationStore.emitChange(AuthConstants.AUTHENTICATION_CHANGE);
+                AuthenticationStore.emitChange(action.actionType);
                 break;
         }
 
