@@ -1,10 +1,10 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    Route         = Router.Route,
-    DefaultRoute  = Router.DefaultRoute,
+var React = require('react'),
+    Router = require('react-router'),
+    Route = Router.Route,
+    DefaultRoute = Router.DefaultRoute,
     TravelTodoApp = require('./components/TravelTodoApp.react'),
-    Login         = require('./components/Login.react'),
-    Travelers     = require('./components/TravelersList.react.js');
+    Login = require('./components/Login.react'),
+    Travelers = require('./components/TravelersList.react.js');
 
 require('bootstrap');
 require('../css/style.css');

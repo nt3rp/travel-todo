@@ -1,29 +1,28 @@
-var EventEmitter  = require('events').EventEmitter,
-    assign        = require('object-assign'),
+var EventEmitter = require('events').EventEmitter,
+    assign = require('object-assign'),
     AppDispatcher = require('../dispatcher/AppDispatcher'),
     AuthConstants = require('../constants/AuthenticationConstants');
 
 var user = null;
 
-// TODO: Remove boilerplate
 var AuthenticationStore = assign({}, EventEmitter.prototype, {
-    emitChange: function(event) {
+    emitChange: function (event) {
         this.emit(event);
     },
 
-    addChangeListener: function(event, callback) {
+    addChangeListener: function (event, callback) {
         this.on(event, callback);
     },
 
-    removeChangeListener: function(event, callback) {
+    removeChangeListener: function (event, callback) {
         this.removeListener(event, callback);
     },
 
-    getUser: function() {
+    getUser: function () {
         return user;
     },
 
-    dispatchToken: AppDispatcher.register(function(payload) {
+    dispatchToken: AppDispatcher.register(function (payload) {
         var action = payload.action;
 
         switch (action.actionType) {

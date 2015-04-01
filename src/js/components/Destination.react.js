@@ -1,26 +1,26 @@
-var React              = require('react'),
+var React = require('react'),
     DestinationActions = require('../actions/DestinationActions'),
     AuthHelpers = require('../utils/AuthenticationHelpers'),
-    TravelersStore     = require('../stores/TravelerStore'),
+    TravelersStore = require('../stores/TravelerStore'),
     TravelersConstants = require('../constants/TravelerConstants'),
-    classNames  = require('classnames');
+    classNames = require('classnames');
 
 var Destination = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             inProgress: false
         }
     },
 
-    componentDidMount: function() {
+    componentDidMount: function () {
         TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
         TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
     },
 
-    render: function() {
+    render: function () {
         var destination = this.props.destination,
             canModifyDestination = AuthHelpers.canModifyTraveler(this.props.traveler),
             deleteButton, itemClasses, labelClasses, disabled;
@@ -64,21 +64,21 @@ var Destination = React.createClass({
         )
     },
 
-    toggleVisited: function() {
+    toggleVisited: function () {
         this.setState({
             inProgress: true
         });
         DestinationActions.toggleVisited(this.props.traveler, this.props.destination);
     },
 
-    destroyDestination: function() {
+    destroyDestination: function () {
         this.setState({
             inProgress: true
         });
         DestinationActions.destroy(this.props.traveler, this.props.destination);
     },
 
-    onTravelerUpdate: function() {
+    onTravelerUpdate: function () {
         this.setState({
             inProgress: false
         });
