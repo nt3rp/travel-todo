@@ -50,9 +50,13 @@ var TravelerStore = assign({}, EventEmitter.prototype, {
                 break;
             case TravelerConstants.TRAVELERS_UPDATE:
                 var updatedTraveler  = action.travelers[0],
-                    existingTraveler = travelers[updatedTraveler.id];
+                    existingTraveler = travelers[updatedTraveler.id],
+                    destinations;
 
+                // Handle bug where backend returns a set of destinations that is `null`
+                updatedTraveler.destinations = updatedTraveler.destinations || [];
                 travelers[updatedTraveler.id] = _.merge(existingTraveler, updatedTraveler);
+
                 TravelerStore.emitChange(TravelerConstants.TRAVELERS_CHANGE);
                 break;
         }
