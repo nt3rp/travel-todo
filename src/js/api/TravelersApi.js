@@ -1,34 +1,26 @@
-var Request           = require('browser-request'),
-    ApiConstants      = require('../constants/ApiConstants'),
+var Request = require('browser-request'),
+    ApiConstants = require('../constants/ApiConstants'),
     TravelerConstants = require('../constants/TravelerConstants'),
-    AppDispatcher     = require('../dispatcher/AppDispatcher');
+    AppDispatcher = require('../dispatcher/AppDispatcher');
 
-var Path    = '/travelers',
+var Path = '/travelers',
     Timeout = 5000;     // 5 seconds
-
-var onError = function() {
-
-};
 
 // TODO: Remove unecessary prefixes
 var TravelersApi = {
-    getTravelers: function(token) {
+    getTravelers: function (token) {
         var options = {
-            url:     ApiConstants.url + Path,
+            url: ApiConstants.url + Path,
             timeout: Timeout,
             headers: {
                 'Authorization': 'Token token=' + token
             }
         };
 
-        Request(options, function(error, httpResponse, body) {
+        Request(options, function (error, httpResponse, body) {
             var payload;
 
-            if (error) {
-                onError();
-            } else if (httpResponse.status == 401) {
-                onError();
-            } else if (httpResponse.status == 200) {
+            if (httpResponse.status == 200) {
                 payload = JSON.parse(httpResponse.response);
                 AppDispatcher.handleViewAction({
                     actionType: TravelerConstants.TRAVELERS_FETCH,
@@ -38,26 +30,22 @@ var TravelersApi = {
         });
     },
 
-    updateTraveler: function(token, traveler) {
+    updateTraveler: function (token, traveler) {
         var options = {
-            url:     ApiConstants.url + Path + '/' + traveler.id,
-            method:  'PATCH',
-            json:    true,
+            url: ApiConstants.url + Path + '/' + traveler.id,
+            method: 'PATCH',
+            json: true,
             timeout: Timeout,
-            body:    JSON.stringify({'destinations': traveler.destinations}),
+            body: JSON.stringify({'destinations': traveler.destinations}),
             headers: {
                 'Authorization': 'Token token=' + token
             }
         };
 
-        Request(options, function(error, httpResponse, body) {
+        Request(options, function (error, httpResponse, body) {
             var payload;
 
-            if (error) {
-                onError();
-            } else if (httpResponse.status == 401) {
-                onError();
-            } else if (httpResponse.status == 200) {
+            if (httpResponse.status == 200) {
                 payload = JSON.parse(httpResponse.response);
                 AppDispatcher.handleViewAction({
                     actionType: TravelerConstants.TRAVELERS_UPDATE,

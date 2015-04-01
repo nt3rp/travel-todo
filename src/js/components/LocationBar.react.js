@@ -1,45 +1,42 @@
 var React = require('react'),
     DestinationActions = require('../actions/DestinationActions'),
-    TravelersStore     = require('../stores/TravelerStore'),
+    TravelersStore = require('../stores/TravelerStore'),
     TravelersConstants = require('../constants/TravelerConstants');
 
 var ENTER_KEY_CODE = 13;
 
 var LocationBar = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             inProgress: false
         }
     },
 
-    componentDidMount: function() {
+    componentDidMount: function () {
         TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
         TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
     },
 
-    render: function() {
+    render: function () {
         var disabled;
 
         if (this.state.inProgress) {
-            disabled="disabled";
+            disabled = "disabled";
         }
 
         return (
             <div className='form-inline'>
                 <div className='form-group'>
-                    <label htmlFor='new-location'
-                    >
-                        New Location:
-                    </label>
+                    <label htmlFor='new-location'>New Location: </label>
                     <input
                         id='new-location'
                         name='new-location'
                         className='form-control'
                         type='text'
-                        onKeyDown={this._onKeyDown}
+                        onKeyDown={this.onKeyDown}
                         disabled={disabled}
                     />
                 </div>
@@ -47,20 +44,20 @@ var LocationBar = React.createClass({
         )
     },
 
-    _onKeyDown: function(event) {
+    onKeyDown: function (event) {
         if (event.keyCode === ENTER_KEY_CODE) {
             this.addLocation(event.target.value);
         }
     },
 
-    addLocation: function(name) {
+    addLocation: function (name) {
         this.setState({
             inProgress: true
         });
         DestinationActions.create(this.props.traveler, name);
     },
 
-    onTravelerUpdate: function() {
+    onTravelerUpdate: function () {
         this.setState({
             inProgress: false
         });

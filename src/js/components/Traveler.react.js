@@ -1,10 +1,10 @@
-var React       = require('react'),
+var React = require('react'),
     Destination = require('./Destination.react'),
     LocationBar = require('./LocationBar.react'),
     AuthHelpers = require('../utils/AuthenticationHelpers');
 
 var Traveler = React.createClass({
-    render: function() {
+    render: function () {
         var traveler = this.props.traveler,
             destinations = [],
             destination, i,
@@ -12,8 +12,6 @@ var Traveler = React.createClass({
 
         for (i = 0; i < traveler.destinations.length; i++) {
             destination = traveler.destinations[i];
-
-            // TODO: Destination is a part of traveler... changing it should change the traveler
             destinations.push(<Destination key={destination.name} traveler={traveler} destination={destination}/>);
         }
 

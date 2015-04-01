@@ -1,15 +1,15 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher'),
-    TravelerApi   = require('../api/TravelersApi'),
-    AuthStore     = require('../stores/AuthenticationStore'),
-    AuthHelpers   = require('../utils/AuthenticationHelpers'),
-    _             = require('lodash');
+    TravelerApi = require('../api/TravelersApi'),
+    AuthStore = require('../stores/AuthenticationStore'),
+    AuthHelpers = require('../utils/AuthenticationHelpers'),
+    _ = require('lodash');
 
 var DestinationActions = {
-    create          :  function(traveler, destinationName) {
+    create: function (traveler, destinationName) {
         var user = AuthStore.getUser(),
             existingDestination;
 
-        if(!AuthHelpers.canModifyTraveler(traveler, user)) {
+        if (!AuthHelpers.canModifyTraveler(traveler, user)) {
             return;
         }
 
@@ -22,10 +22,10 @@ var DestinationActions = {
 
         TravelerApi.updateTraveler(user.token, traveler);
     },
-    destroy         : function(traveler, destination) {
+    destroy: function (traveler, destination) {
         var user = AuthStore.getUser();
 
-        if(!AuthHelpers.canModifyTraveler(traveler, user)) {
+        if (!AuthHelpers.canModifyTraveler(traveler, user)) {
             return;
         }
 
@@ -33,12 +33,12 @@ var DestinationActions = {
 
         TravelerApi.updateTraveler(user.token, traveler);
     },
-    toggleVisited: function(traveler, destination) {
+    toggleVisited: function (traveler, destination) {
         // Cross cutting concern / mixin: current user?
         var user = AuthStore.getUser(),
             existingDestination;
 
-        if(!AuthHelpers.canModifyTraveler(traveler, user)) {
+        if (!AuthHelpers.canModifyTraveler(traveler, user)) {
             return;
         }
 

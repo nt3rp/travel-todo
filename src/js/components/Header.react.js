@@ -1,9 +1,9 @@
-var React       = require('react'),
-    AuthStore   = require('../stores/AuthenticationStore'),
+var React = require('react'),
+    AuthStore = require('../stores/AuthenticationStore'),
     AuthActions = require('../actions/AuthenticationActions');
 
 var Header = React.createClass({
-    render: function() {
+    render: function () {
         var button;
 
         if (AuthStore.getUser()) {
@@ -30,7 +30,7 @@ var Header = React.createClass({
         )
     },
 
-    logout: function() {
+    logout: function () {
         AuthActions.logout();
     }
 });

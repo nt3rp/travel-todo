@@ -1,34 +1,34 @@
-var React              = require('react'),
-    TravelersStore     = require('../stores/TravelerStore'),
+var React = require('react'),
+    TravelersStore = require('../stores/TravelerStore'),
     TravelersConstants = require('../constants/TravelerConstants'),
-    AuthHelpers        = require('../utils/AuthenticationHelpers'),
-    Traveler           = require('./Traveler.react.js'),
+    AuthHelpers = require('../utils/AuthenticationHelpers'),
+    Traveler = require('./Traveler.react.js'),
     TravelerActions = require('../actions/TravelerActions');
 
 var TravelersList = React.createClass({
     mixins: [AuthHelpers.requiresAuthentication],
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             travelers: TravelersStore.getTravelers()
         }
     },
 
-    componentDidMount: function() {
+    componentDidMount: function () {
         TravelerActions.getTravelers();
-        TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this._onChange);
+        TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelersChange);
     },
 
-    componentWillUnmount: function() {
-        TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this._onChange);
+    componentWillUnmount: function () {
+        TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelersChange);
     },
 
-    render: function() {
+    render: function () {
         var travelers = [],
             traveler,
             i;
 
-        for (i=0; i < this.state.travelers.length; i++) {
+        for (i = 0; i < this.state.travelers.length; i++) {
             traveler = this.state.travelers[i];
             travelers.push(<Traveler key={traveler.id} traveler={traveler}/>);
         }
@@ -40,7 +40,7 @@ var TravelersList = React.createClass({
         )
     },
 
-    _onChange: function () {
+    onTravelersChange: function () {
         this.setState({travelers: TravelersStore.getTravelers()});
     }
 });

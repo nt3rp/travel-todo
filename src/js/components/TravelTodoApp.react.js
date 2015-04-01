@@ -3,26 +3,24 @@ var React = require('react'),
     Header = require('./Header.react'),
     Footer = require('./Footer.react'),
     AuthStore = require('../stores/AuthenticationStore');
-    AuthConstants = require('../constants/AuthenticationConstants');
+AuthConstants = require('../constants/AuthenticationConstants');
 
 var TravelTodoApp = React.createClass({
     contextTypes: {
         router: React.PropTypes.func
     },
 
-    // TODO: Is there a way to just listen to any events? Then we could just call an `onAuthChange` method instead of
-    // having two silly methods (i.e. `onLogin` and `onLogout`
-    componentDidMount: function() {
+    componentDidMount: function () {
         AuthStore.addChangeListener(AuthConstants.AUTHENTICATION_LOGOUT, this.onLogout);
         AuthStore.addChangeListener(AuthConstants.AUTHENTICATION_LOGIN, this.onLogin);
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
         AuthStore.removeChangeListener(AuthConstants.AUTHENTICATION_LOGOUT, this.onLogout);
         AuthStore.removeChangeListener(AuthConstants.AUTHENTICATION_LOGIN, this.onLogin);
     },
 
-    render: function() {
+    render: function () {
         return (
             <section id='container'>
                 <Header />
@@ -34,15 +32,15 @@ var TravelTodoApp = React.createClass({
         )
     },
 
-    onLogin: function() {
+    onLogin: function () {
         this.transitionTo('travelers');
     },
 
-    onLogout: function() {
+    onLogout: function () {
         this.transitionTo('login');
     },
 
-    transitionTo: function(pageName) {
+    transitionTo: function (pageName) {
         this.context.router.transitionTo(pageName);
     }
 });

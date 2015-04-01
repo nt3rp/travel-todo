@@ -1,4 +1,4 @@
-var React     = require('react'),
+var React = require('react'),
     AuthStore = require('../stores/AuthenticationStore');
 
 var AuthenticationHelpers = {
@@ -12,7 +12,7 @@ var AuthenticationHelpers = {
         }
     },
 
-    canModifyTraveler: function(traveler, user) {
+    canModifyTraveler: function (traveler, user) {
         user = user || AuthStore.getUser() || {};
         traveler = traveler || {};
 
