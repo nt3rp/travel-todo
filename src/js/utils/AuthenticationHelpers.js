@@ -10,6 +10,13 @@ var AuthenticationHelpers = {
                 }
             }
         }
+    },
+
+    hasAccess: function(user, traveler) {
+        user = user || {};
+        traveler = traveler || {};
+
+        return (user.id === traveler.id)
     }
 };
 

@@ -13,7 +13,8 @@ var config = {
     },
     'build': {
         'dir': 'build',
-        'js': 'build/js'
+        'js': 'build/js',
+        'fonts': 'build/js/*.{eot,svg,ttf,woff,woff2}'
     }
 
 };
@@ -35,6 +36,12 @@ gulp.task('webpack', function(callback) {
     });
 });
 
+// There is probably a way to do this with webpack, but until then, just move some files in the build directory
+gulp.task('fonts', function() {
+    return gulp.src(config.build.fonts)
+        .pipe(gulp.dest(config.build.dir));
+});
+
 gulp.task('serve', function(next) {
     connect.server({
         root: config.build.dir,
@@ -47,6 +54,7 @@ gulp.task('serve', function(next) {
 gulp.task('watch', function () {
     gulp.watch(config.src.html, ['html']);
     gulp.watch(config.src.webpack, ['webpack']);
+    gulp.watch(config.build.fonts, ['fonts']);
 });
 
 gulp.task('clean', function() {
@@ -54,6 +62,6 @@ gulp.task('clean', function() {
         .pipe(clean());
 });
 
-gulp.task('build', ['html', 'webpack']);
+gulp.task('build', ['html', 'webpack', 'fonts']);
 
 gulp.task('default', ['build', 'watch', 'serve']);

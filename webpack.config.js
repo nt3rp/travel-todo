@@ -32,7 +32,7 @@ var config = {
             jQuery: "jquery"
         }),
         new webpack.optimize.OccurenceOrderPlugin()
-        // TODO: Enable in debug only
+        // TODO: Enable in production only
         //new webpack.optimize.DedupePlugin(),
         //new webpack.optimize.UglifyJsPlugin(),
         //new webpack.optimize.AggressiveMergingPlugin()
