@@ -14,10 +14,12 @@ var Destination = React.createClass({
 
     componentDidMount: function () {
         TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
+        TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_ERROR, this.onTravelerUpdate);
     },
 
     componentWillUnmount: function () {
         TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_CHANGE, this.onTravelerUpdate);
+        TravelersStore.removeChangeListener(TravelersConstants.TRAVELERS_ERROR, this.onTravelerUpdate);
     },
 
     render: function () {
@@ -44,7 +46,9 @@ var Destination = React.createClass({
                     </button>
                 </span>
             );
-        } else {
+        }
+
+        if (!canModifyDestination || this.state.inProgress) {
             disabled = "disabled";
         }
 
@@ -72,9 +76,7 @@ var Destination = React.createClass({
     },
 
     destroyDestination: function () {
-        this.setState({
-            inProgress: true
-        });
+        // No need to change state to indicate this is no longer in progress; it won't exist anymore!
         DestinationActions.destroy(this.props.traveler, this.props.destination);
     },
 
