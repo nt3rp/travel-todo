@@ -4,7 +4,8 @@
   "description": "A simple application to track places you want to go",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "$(npm bin)/gulp"
   },
   "repository": {
     "type": "git",
