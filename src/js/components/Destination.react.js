@@ -7,18 +7,29 @@ var Destination = React.createClass({
 
         return (
             <li className='list-group-item borderless'>
-                <input
-                    type='checkbox'
-                    checked={destination.visited}
-                    onChange={this._onChange}
-                />
-                {destination.name}
+                <label className='checkbox-inline'>
+                    <input
+                        type='checkbox'
+                        checked={destination.visited}
+                        onChange={this.toggleVisited}
+                    />
+                    {destination.name}
+                </label>
+                <span className='pull-right'>
+                    <button className="btn btn-xs btn-warning" onClick={this.destroyDestination}>
+                        <span className="glyphicon glyphicon-trash"></span>
+                    </button>
+                </span>
             </li>
         )
     },
 
-    _onChange: function() {
+    toggleVisited: function() {
         DestinationActions.toggleVisited(this.props.traveler, this.props.destination);
+    },
+
+    destroyDestination: function() {
+        DestinationActions.destroy(this.props.traveler, this.props.destination);
     }
 });
 
