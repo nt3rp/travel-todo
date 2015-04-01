@@ -18,6 +18,10 @@ body {
     margin: 0px;
 }
 
+.margin-right-small {
+    margin-right: 5px;
+}
+
 .uppercase {
     text-transform: uppercase;
 }

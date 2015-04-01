@@ -2,7 +2,8 @@ var React              = require('react'),
     TravelersStore     = require('../stores/TravelerStore'),
     TravelersConstants = require('../constants/TravelerConstants'),
     AuthHelpers        = require('../utils/AuthenticationHelpers'),
-    Traveler           = require('./Traveler.react.js');
+    Traveler           = require('./Traveler.react.js'),
+    TravelerActions = require('../actions/TravelerActions');
 
 var TravelersList = React.createClass({
     mixins: [AuthHelpers.requiresAuthentication],
@@ -14,6 +15,7 @@ var TravelersList = React.createClass({
     },
 
     componentDidMount: function() {
+        TravelerActions.getTravelers();
         TravelersStore.addChangeListener(TravelersConstants.TRAVELERS_CHANGE, this._onChange);
     },
 
